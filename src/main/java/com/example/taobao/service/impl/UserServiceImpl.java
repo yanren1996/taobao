@@ -17,8 +17,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserEntity addUser(UserEntity user) {
-        // 判斷user是否已存在，不存在則可以新增使用者
+    public UserEntity addUser(UserEntity user) throws Exception {
+        // user若存在，則發生例外
+        if(userRepository.findByEmail(user.getEmail()) != null){
+            throw new Exception("Email 已註冊");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

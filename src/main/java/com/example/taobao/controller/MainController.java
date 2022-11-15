@@ -16,17 +16,22 @@ public class MainController {
     private UserService userService;
 
     @PostMapping("addUser")
-    public StandardJSend addUser(@RequestBody String webJson){
+    public StandardJSend addUser(@RequestBody String webJson) {
         UserEntity user = getObjFromJson(webJson, UserEntity.class);
-        UserEntity result = userService.addUser(user);
-//        StandardJSend.builder()
-//                .status("error")
-//                .message("")
-//                .build();
-        return StandardJSend.builder()
-                .data(result)
-                .status("success")
-                .build();
+
+        try {
+            UserEntity result = userService.addUser(user);
+            return StandardJSend.builder()
+                    .data(result)
+                    .status("success")
+                    .build();
+        } catch (Exception e) {
+            return StandardJSend.builder()
+                    .status("error")
+                    .message(e.getMessage())
+                    .build();
+        }
+
     }
 
     protected <T> T getObjFromJson(String json, Class<T> clazz) {
