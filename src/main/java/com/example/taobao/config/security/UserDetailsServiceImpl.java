@@ -1,4 +1,4 @@
-package com.example.taobao.security;
+package com.example.taobao.config.security;
 
 import com.example.taobao.entity.UserEntity;
 import com.example.taobao.repository.UserRepository;

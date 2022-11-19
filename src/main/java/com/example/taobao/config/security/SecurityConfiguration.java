@@ -1,4 +1,4 @@
-package com.example.taobao.config;
+package com.example.taobao.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class SecurityConfiguration {
         http.authorizeRequests()
                 // 除了h2，所有請求都需要攔截
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/addUser").permitAll()
+                .antMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // 使用預設登入表單
