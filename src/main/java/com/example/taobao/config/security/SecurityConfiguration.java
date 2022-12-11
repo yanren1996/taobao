@@ -16,7 +16,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 除了h2跟PublicController，所有請求都需要攔截(框架升級6.0後不曉得為啥/h2-console/** 無法允許)
+                // 除了h2跟PublicController，所有請求都需要攔截
+                // fixme 框架升級6.0後不曉得為啥 /h2-console/** 無法允許
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**", "/public/**").permitAll()
                         .anyRequest().authenticated()

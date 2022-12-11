@@ -1,6 +1,6 @@
 package com.example.taobao.config.security;
 
-import com.example.taobao.entity.UserEntity;
+import com.example.taobao.model.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

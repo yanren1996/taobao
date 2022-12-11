@@ -1,4 +1,4 @@
-package com.example.taobao.entity;
+package com.example.taobao.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

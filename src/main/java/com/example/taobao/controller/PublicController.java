@@ -1,9 +1,10 @@
 package com.example.taobao.controller;
 
-import com.example.taobao.entity.UserEntity;
 import com.example.taobao.model.StandardJSend;
+import com.example.taobao.model.dto.UserDto;
+import com.example.taobao.model.entity.UserEntity;
+import com.example.taobao.model.vo.UserVo;
 import com.example.taobao.service.UserService;
-import com.example.taobao.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,18 +22,18 @@ public class PublicController {
     private UserService userService;
 
     @GetMapping("/")
-    public String hello(){
+    public String hello() {
         return "hello world!!";
     }
 
     @PostMapping("addUser")
-    public StandardJSend addUser(@RequestBody String webJson) {
-        UserEntity user = JsonUtil.getObjFromJson(webJson, UserEntity.class);
+    public StandardJSend addUser(@RequestBody UserDto userDto) {
+//        UserDto userDto = JsonUtil.getObjFromJson(webJson, UserDto.class);
 
         try {
-            UserEntity result = userService.addUser(user);
+            UserEntity userEntity = userService.addUser(userDto);
             return StandardJSend.builder()
-                    .data(result)
+                    .data(userEntity)
                     .status("success")
                     .build();
         } catch (Exception e) {
@@ -45,7 +46,7 @@ public class PublicController {
 
     @GetMapping("userPage/{pageNo}")
     public StandardJSend userPage(@PathVariable int pageNo) {
-        Page<UserEntity> userEntityPage = userService.userPage(pageNo, 3, "email", "firstName");
+        Page<UserVo> userEntityPage = userService.userPage(pageNo, 3, "email", "firstName");
 
         return StandardJSend.builder()
                 .data(userEntityPage)

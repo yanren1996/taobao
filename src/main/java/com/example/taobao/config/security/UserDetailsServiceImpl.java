@@ -1,6 +1,6 @@
 package com.example.taobao.config.security;
 
-import com.example.taobao.entity.UserEntity;
+import com.example.taobao.model.entity.UserEntity;
 import com.example.taobao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByEmail(username);
+        UserEntity user = userRepository.findByEmail(username, UserEntity.class);
         if (user == null) {
             throw new UsernameNotFoundException("user not found:" + username);
         }
