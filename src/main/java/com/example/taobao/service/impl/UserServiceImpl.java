@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity addUser(UserEntity user) throws Exception {
         // user若存在，則發生例外
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new Exception("Email 已註冊");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));

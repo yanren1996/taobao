@@ -2,7 +2,10 @@ package com.example.taobao.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,20 +15,18 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                // 除了h2，所有請求都需要攔截
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/public/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+        http
+                // 除了h2跟PublicController，所有請求都需要攔截(框架升級6.0後不曉得為啥/h2-console/** 無法允許)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/h2-console/**", "/public/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 // 使用預設登入表單
-                .formLogin()
-                .and()
+                .formLogin(Customizer.withDefaults())
                 // 使用localhost時，允許使用iframe(我們才能使用h2-console)
-                .headers().frameOptions().sameOrigin()
-                .and()
+                .headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
                 // 關閉csrf(測試時關閉)
-                .csrf().disable();
+                .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 

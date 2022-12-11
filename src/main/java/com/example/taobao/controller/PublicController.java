@@ -20,6 +20,11 @@ public class PublicController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/")
+    public String hello(){
+        return "hello world!!";
+    }
+
     @PostMapping("addUser")
     public StandardJSend addUser(@RequestBody String webJson) {
         UserEntity user = JsonUtil.getObjFromJson(webJson, UserEntity.class);
