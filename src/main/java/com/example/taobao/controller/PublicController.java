@@ -1,7 +1,7 @@
 package com.example.taobao.controller;
 
 import com.example.taobao.model.StandardJSend;
-import com.example.taobao.model.dto.UserDto;
+import com.example.taobao.model.dto.UserAddDto;
 import com.example.taobao.model.entity.UserEntity;
 import com.example.taobao.model.vo.UserVo;
 import com.example.taobao.service.UserService;
@@ -27,11 +27,11 @@ public class PublicController {
     }
 
     @PostMapping("addUser")
-    public StandardJSend addUser(@RequestBody UserDto userDto) {
-//        UserDto userDto = JsonUtil.getObjFromJson(webJson, UserDto.class);
+    public StandardJSend addUser(@RequestBody UserAddDto userAddDto) {
+//        UserAddDto userAddDto = JsonUtil.getObjFromJson(webJson, UserAddDto.class);
 
         try {
-            UserEntity userEntity = userService.addUser(userDto);
+            UserEntity userEntity = userService.addUser(userAddDto);
             return StandardJSend.builder()
                     .data(userEntity)
                     .status("success")
