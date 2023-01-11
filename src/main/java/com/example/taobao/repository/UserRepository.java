@@ -10,6 +10,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     <T> T findByEmail(String email, Class<T> type);
 
 //    Page<UserEntity> findAll(Pageable pageable);
+
     /**
      * 查詢全部 (findAll不支援 返回非Entity類型資料，而我們想返回VO)
      */

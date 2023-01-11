@@ -2,7 +2,6 @@ package com.example.taobao.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
@@ -22,8 +21,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/h2-console/**", "/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                // 使用預設登入表單
-                .formLogin(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())// 使用預設登入表單
+                .formLogin(loginConfigurer -> loginConfigurer.defaultSuccessUrl("/user/info"))
                 // 使用localhost時，允許使用iframe(我們才能使用h2-console)
                 .headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
                 // 關閉csrf(測試時關閉)

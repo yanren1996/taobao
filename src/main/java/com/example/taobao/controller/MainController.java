@@ -5,8 +5,6 @@ import com.example.taobao.model.dto.UserUpdateDto;
 import com.example.taobao.model.entity.UserEntity;
 import com.example.taobao.model.vo.UserVo;
 import com.example.taobao.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +45,7 @@ public class MainController {
     }
 
     @GetMapping("delete")
-    public ModelAndView deleteUser(Authentication auth, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public ModelAndView deleteUser(Authentication auth) throws IOException {
         userService.deleteUser(auth.getName());
 
         return new ModelAndView("forward:/logout");// DB刪除完登出

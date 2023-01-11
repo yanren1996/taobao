@@ -21,7 +21,7 @@ public class PublicController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping
     public String hello() {
         return "hello world!!";
     }
